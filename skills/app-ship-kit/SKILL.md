@@ -11,7 +11,7 @@ description: >-
 license: MIT
 metadata:
   openstandard: agentskills.io
-  version: "0.3.0"
+  version: "0.3.1"
   stacks: expo, react-native, supabase, typescript
 ---
 
@@ -56,7 +56,7 @@ Do not load every file.
 ### Act
 
 Climb [philosophy.md](references/philosophy.md), then execute only that pipeline.
-For greenfield setup, start with [bootstrap.md](references/bootstrap.md).
+For greenfield setup, start with [bootstrap.md](references/bootstrap.md) or run `scripts/setup.sh --init` from the app root.
 
 ### Verify
 

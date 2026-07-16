@@ -10,7 +10,7 @@ Use when adding migrations, RLS, RPCs, edge functions, or hot-path queries. Pref
 2. Pull security + performance advisors
 3. Draft SQL in `supabase/migrations/` (timestamp prefix) — review in repo before apply
 4. Policies use `auth.uid()` — never client-trusted identity for writes
-5. Indexes on FKs used in list/feed/ranking queries
+5. Indexes on FKs used in list / feed / hot-path queries
 6. Regenerate types (`gen:types` or `supabase gen types`)
 7. Smoke any grant/RLS scripts the repo provides
 
@@ -22,7 +22,7 @@ Use when adding migrations, RLS, RPCs, edge functions, or hot-path queries. Pref
 |---------|------|
 | Own rows | `user_id = auth.uid()` on CRUD |
 | Public read | Authenticated SELECT; strip PII via views if needed |
-| Org / crew scope | Join membership table where member is `auth.uid()` |
+| Org / team scope | Join membership table where member is `auth.uid()` |
 | Admin | Server-side admin flag check — never ship service role to client |
 | Rate limits | Prefer DB triggers; client detects and surfaces errors |
 

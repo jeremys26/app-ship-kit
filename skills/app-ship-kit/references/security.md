@@ -59,7 +59,7 @@ Use as a review cheat sheet (not every item applies every stack):
 | Client-only rate limits | Server/DB throttle |
 | Debug bypass in prod | `__DEV__` / build-profile gated |
 
-Full 62-item class list lived in Totem's security-checklist skill — expand there only if auditing a similar RN+Supabase app.
+For a longer vulnerability-class checklist when auditing a similar RN + Supabase stack, expand from the table above and from installed `insecure-defaults` / `differential-review` skills ([ecosystem.md](ecosystem.md)).
 
 ---
 
@@ -98,4 +98,4 @@ const code = Array.from(bytes, (b) => CHARS[b % CHARS.length]).join('');
 |--------|--------|
 | New table / RPC / edge function | Stack rules section |
 | PR touching auth/DB/env | Stack rules + differential review if available |
-| Pre-ship | Advisors + insecure-defaults scan + no SKIP_AUTH in prod |
+| Pre-ship | Advisors + insecure-defaults scan + no auth-bypass / skip-auth flags in production |

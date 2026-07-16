@@ -84,7 +84,7 @@ Deep audit / App Store a11y prep → **axiom-ios-accessibility** (ecosystem).
 
 ## Copy on mobile
 
-Short. One idea per line. Imperative empty states ("Log your first set").  
+Short. One idea per line. Imperative empty states ("Add your first item").  
 De-slopify per [ui.md](ui.md) — no product-blog voice.
 
 ---

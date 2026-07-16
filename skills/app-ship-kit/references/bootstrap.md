@@ -1,28 +1,56 @@
-# Bootstrap — new repo / first week
+# Bootstrap — new project
 
-Use when starting a greenfield app or dropping this kit into an existing repo.
+Use when starting a greenfield app or adding this kit to an existing repo.
+
+---
+
+## Fastest path (recommended)
+
+From the **app repository root**:
+
+```bash
+npx skills add jeremys26/app-ship-kit --skill app-ship-kit -y
+```
+
+Then either:
+
+**A — Scaffold with the setup script** (if you have a local clone of this kit):
+
+```bash
+/path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --init
+# optional:
+/path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --stack expo-supabase
+```
+
+**B — Ask the agent** (after install):
+
+```text
+use app-ship-kit — bootstrap this new project
+```
+
+The agent should: create `.claude/DESIGN.md` from the design-brief template (if missing),
+offer the AGENTS snippet, and optionally suggest one `--stack` pack.
 
 ---
 
 ## Checklist
 
-- [ ] Install kit: `npx skills add jeremys26/app-ship-kit --skill app-ship-kit -y`  
-      or `./skills/app-ship-kit/scripts/setup.sh`
-- [ ] Optional stack (pick one primary):
+- [ ] Skill installed (`npx skills add …` or `setup.sh`)
+- [ ] `.claude/DESIGN.md` filled (brand, tokens, do/don't) — template in `assets/design-brief-template.md`
+- [ ] `AGENTS.md` (or `CLAUDE.md`) mentions app-ship-kit — see `assets/AGENTS.snippet.md`
+- [ ] Optional: `docs/ship-checklist.md` from `assets/ship-checklist-template.md`
+- [ ] Optional stack (pick **one** primary):
   - Expo + backend: `--stack expo-supabase`
   - Expo + perf: `--stack expo-mobile`
   - Near App Store: `--stack ios-ship`
-- [ ] Create `.claude/DESIGN.md` from [design-brief-template.md](../assets/design-brief-template.md)
-- [ ] Optional: append [AGENTS.snippet.md](../assets/AGENTS.snippet.md) to `AGENTS.md` / `CLAUDE.md`
-- [ ] Copy [ship-checklist-template.md](../assets/ship-checklist-template.md) → `docs/ship-checklist.md` (adapt)
-- [ ] Confirm `.env*` gitignored; no secrets with `EXPO_PUBLIC_` / `NEXT_PUBLIC_`
-- [ ] Point agent at primary platform (iOS sim vs web) once
+- [ ] `.env*` gitignored; no secrets in `EXPO_PUBLIC_` / `NEXT_PUBLIC_`
+- [ ] Tell the agent the primary platform once (iOS simulator vs web)
 
 ---
 
 ## Folder conventions (suggested, not required)
 
-Adapt names to the stack; keep **layer discipline** from [architecture.md](architecture.md):
+Adapt names to your stack; keep **layer discipline** from [architecture.md](architecture.md):
 
 ```text
 app/ or screens/     # routes — thin
@@ -34,15 +62,14 @@ supabase/migrations/ # if Supabase
 
 ---
 
-## First three agent tasks (recommended order)
+## First three agent tasks
 
 1. Fill DESIGN.md (tokens + primitives + do/don't).
-2. Implement or harden auth session storage (SecureStore / httpOnly — stack-appropriate).
-3. Add one vertical slice end-to-end with RLS + one smoke check ([testing.md](testing.md)).
+2. Harden auth session storage for the stack (SecureStore / httpOnly cookies / etc.).
+3. One vertical slice end-to-end with authZ + one smoke check ([testing.md](testing.md)).
 
 ---
 
 ## Done when
 
-Peers can say `use app-ship-kit` and the agent routes to a pipeline without
-pasting long prompts. Upstream packs are optional, not blocking.
+Saying `use app-ship-kit` routes work without pasting long prompts. Upstream packs are optional.

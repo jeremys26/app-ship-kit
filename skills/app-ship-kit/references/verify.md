@@ -32,7 +32,7 @@ xcrun simctl list devices | grep Booted
 # screenshots / UI dump via idb or simctl as project docs specify
 ```
 
-Do not invent Totem-specific bundle IDs or URL schemes — read `app.json` / `app.config.*` in **this** repo.
+Do not invent bundle IDs or URL schemes — read `app.json` / `app.config.*` (or native project files) in **this** repo.
 
 ---
 

@@ -62,10 +62,10 @@ Concrete prompts and expected agent behavior. Use these when onboarding peers or
 **User:** "Set up agent skills for this new Expo app."
 
 **Act:**
-1. Install kit (`setup.sh` or `npx skills add`).
-2. Fill design brief → `.claude/DESIGN.md`.
-3. Suggest `--stack expo-supabase` once.
-4. Paste AGENTS snippet from `assets/AGENTS.snippet.md` if they want always-on routing.
+1. Confirm kit installed (`npx skills add jeremys26/app-ship-kit --skill app-ship-kit -y` if missing).
+2. Prefer `setup.sh --init` when a local clone exists; else copy design-brief → `.claude/DESIGN.md` and offer AGENTS snippet.
+3. Suggest one stack pack once (`expo-supabase` for Expo + Supabase apps).
+4. Tell them to fill DESIGN.md before UI work.
 
 ---
 
