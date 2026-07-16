@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 # Install app-ship-kit into a project (+ optional scaffold / stack packs).
+#
+# Safe to run from inside an already-installed skill path (e.g.
+# .cursor/skills/app-ship-kit/scripts/setup.sh). Copies via a temp staging
+# dir first so we never delete the script's own source mid-run.
 set -euo pipefail
 
 STACK=""
@@ -23,10 +27,12 @@ Options:
 
 Stacks: expo-supabase | expo-mobile | ios-ship | expo | supabase | perf | a11y | security
 
-Examples (from your app root):
-  path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --init
-  path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --init --stack expo-supabase
-  npx skills add jeremys26/app-ship-kit --skill app-ship-kit -y   # install only
+Typical flow (from your app root):
+  npx skills add jeremys26/app-ship-kit --skill app-ship-kit -y
+  .cursor/skills/app-ship-kit/scripts/setup.sh --init --stack expo-supabase
+
+Or from a separate clone of this repo:
+  /path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --init --stack expo-supabase
 EOF
 }
 
@@ -41,9 +47,33 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# Original location (may be inside the project skill dir we are about to refresh)
 SKILL_SRC="$(cd "$(dirname "$0")/.." && pwd)"
-ASSETS="$SKILL_SRC/assets"
 PROJECT="$(pwd)"
+
+# Stage immediately so later rm -rf of install targets cannot delete our source
+STAGE="$(mktemp -d "${TMPDIR:-/tmp}/app-ship-kit.XXXXXX")"
+cleanup() { rm -rf "$STAGE"; }
+trap cleanup EXIT
+
+cp -R "$SKILL_SRC" "$STAGE/app-ship-kit"
+WORK_SRC="$STAGE/app-ship-kit"
+ASSETS="$WORK_SRC/assets"
+
+realpath_safe() {
+  local p="$1"
+  if [[ -d "$p" ]]; then (cd "$p" && pwd -P)
+  elif [[ -e "$p" ]]; then
+    local d; d="$(cd "$(dirname "$p")" && pwd -P)"
+    echo "$d/$(basename "$p")"
+  else
+    echo "$p"
+  fi
+}
+
+same_path() {
+  [[ "$(realpath_safe "$1")" == "$(realpath_safe "$2")" ]]
+}
 
 skills_add() {
   local extra=()
@@ -52,29 +82,30 @@ skills_add() {
     || npx --yes skills add "$@" "${extra[@]}" "${AGENT_ARGS[@]}"
 }
 
-install_local_copy() {
-  local dest_base dest
-  if (( GLOBAL )); then
-    dest_base="${HOME}/.cursor/skills"
-  else
-    dest_base="${PROJECT}/.cursor/skills"
+# Copy staged skill into dest. Never rm dest if it is the live WORK_SRC (impossible
+# after staging) — but do skip no-op when dest already equals a path we just wrote.
+install_one() {
+  local dest="$1"
+  mkdir -p "$(dirname "$dest")"
+  if [[ -d "$dest" ]] && same_path "$dest" "$WORK_SRC"; then
+    echo "Skip $dest (same as staging — should not happen)"
+    return
   fi
-  mkdir -p "$dest_base"
-  dest="${dest_base}/app-ship-kit"
   rm -rf "$dest"
-  cp -R "$SKILL_SRC" "$dest"
-  if (( ! GLOBAL )); then
-    mkdir -p "${PROJECT}/.claude/skills" "${PROJECT}/.agents/skills"
-    rm -rf "${PROJECT}/.claude/skills/app-ship-kit" "${PROJECT}/.agents/skills/app-ship-kit"
-    cp -R "$SKILL_SRC" "${PROJECT}/.claude/skills/app-ship-kit"
-    cp -R "$SKILL_SRC" "${PROJECT}/.agents/skills/app-ship-kit"
+  cp -R "$WORK_SRC" "$dest"
+  echo "Installed → $dest"
+}
+
+install_local_copy() {
+  if (( GLOBAL )); then
+    install_one "${HOME}/.cursor/skills/app-ship-kit"
+    install_one "${HOME}/.claude/skills/app-ship-kit"
+    install_one "${HOME}/.agents/skills/app-ship-kit"
   else
-    mkdir -p "${HOME}/.claude/skills" "${HOME}/.agents/skills"
-    rm -rf "${HOME}/.claude/skills/app-ship-kit" "${HOME}/.agents/skills/app-ship-kit"
-    cp -R "$SKILL_SRC" "${HOME}/.claude/skills/app-ship-kit"
-    cp -R "$SKILL_SRC" "${HOME}/.agents/skills/app-ship-kit"
+    install_one "${PROJECT}/.cursor/skills/app-ship-kit"
+    install_one "${PROJECT}/.claude/skills/app-ship-kit"
+    install_one "${PROJECT}/.agents/skills/app-ship-kit"
   fi
-  echo "Installed app-ship-kit → ${dest}"
 }
 
 scaffold_project() {
@@ -95,7 +126,6 @@ scaffold_project() {
   fi
 
   local snippet
-  # Prefer fenced markdown body; fall back to whole file minus the title line
   if grep -q '^```markdown$' "$ASSETS/AGENTS.snippet.md"; then
     snippet="$(sed -n '/^```markdown$/,/^```$/p' "$ASSETS/AGENTS.snippet.md" | sed '1d;$d')"
   else
@@ -129,6 +159,7 @@ scaffold_project() {
 }
 
 echo "==> Installing app-ship-kit into: ${PROJECT}"
+echo "    (staged from ${SKILL_SRC})"
 install_local_copy
 
 if (( INIT )); then

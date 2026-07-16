@@ -15,26 +15,17 @@ Codex, and other agents.
 
 ## Quick start (new project)
 
-From your **app repo root** (not this skills repo):
+From your **app repo root**:
 
 ```bash
 # 1. Install the skill into this project
 npx skills add jeremys26/app-ship-kit --skill app-ship-kit -y
 
-# 2. Scaffold DESIGN.md + AGENTS.md + ship checklist (optional but recommended)
-npx --yes skills add jeremys26/app-ship-kit --skill app-ship-kit -y   # if not already
-# Or from a clone of this repo:
-#   ./skills/app-ship-kit/scripts/setup.sh --init
+# 2. Scaffold DESIGN.md + AGENTS.md + ship checklist (+ optional Expo/Supabase skills)
+.cursor/skills/app-ship-kit/scripts/setup.sh --init --stack expo-supabase
 ```
 
-If you cloned this repo:
-
-```bash
-cd /path/to/your-app
-/path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --init
-# optional depth:
-/path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --stack expo-supabase
-```
+Safe to run that script from `.cursor/skills/...` — it stages a temp copy first so it never deletes itself.
 
 Then in Agent chat:
 
@@ -44,6 +35,13 @@ use app-ship-kit — bootstrap this new project
 
 Fill `.claude/DESIGN.md` (brand, tokens, do/don't). After that, say `use app-ship-kit`
 for features, UI, security, review, or ship.
+
+### Alternate: separate clone of this repo
+
+```bash
+cd /path/to/your-app
+/path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --init --stack expo-supabase
+```
 
 ---
 

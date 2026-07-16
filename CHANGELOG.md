@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.2
+
+- Fix `setup.sh` self-delete when run from `.cursor/skills/app-ship-kit` (stage to temp before install)
+- Document in-app path: `.cursor/skills/app-ship-kit/scripts/setup.sh --init --stack …`
+
 ## 0.3.1
 
 - Scrubbed product-specific names; generic examples only

@@ -12,17 +12,21 @@ From the **app repository root**:
 npx skills add jeremys26/app-ship-kit --skill app-ship-kit -y
 ```
 
-Then either:
-
-**A — Scaffold with the setup script** (if you have a local clone of this kit):
+**A — After `npx skills add` (recommended):**
 
 ```bash
-/path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --init
-# optional:
-/path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --stack expo-supabase
+.cursor/skills/app-ship-kit/scripts/setup.sh --init --stack expo-supabase
 ```
 
-**B — Ask the agent** (after install):
+(Safe if the script lives under `.cursor/skills` — it copies via a temp dir first.)
+
+**B — From a separate clone of this kit:**
+
+```bash
+/path/to/app-ship-kit/skills/app-ship-kit/scripts/setup.sh --init --stack expo-supabase
+```
+
+**C — Ask the agent** (after install):
 
 ```text
 use app-ship-kit — bootstrap this new project
