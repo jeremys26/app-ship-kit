@@ -63,6 +63,7 @@ Manual equivalents are in each section below.
 | **ui-skills** CLI | `npx ui-skills start` | "Which UI skill?" / motion / a11y routing | Translate web (ARIA/Tailwind) → RN props; **skip** `baseline-ui` unless NativeWind |
 | **expo-native-ui** | via expo/skills | Native-feeling screens, HIG | Best Expo UI depth |
 | **axiom-ios-accessibility** | `npx skills add charleswiltgen/axiom --skill axiom-ios-accessibility -y` | VoiceOver, Dynamic Type, App Store a11y review | Complements kit Pass 6 |
+| **ios-accessibility** (Swift-focused) | `npx skills add dpearson2699/swift-ios-skills --skill ios-accessibility -y` | Higher install count (~3k); useful if auditing native SwiftUI / pure iOS a11y | Prefer for native iOS; Axiom for broader xOS router |
 | **sleek-design-mobile-apps** | `npx skills add sleekdotdesign/agent-skills --skill sleek-design-mobile-apps -y` | Mockups / early visual exploration | **Paid API** (`SLEEK_API_KEY`); not for production code polish |
 
 **Avoid by default:** generic "frontend-design" / random palette skills, `expo-tailwind-setup` unless the project already chose NativeWind, web-only `baseline-ui`.
