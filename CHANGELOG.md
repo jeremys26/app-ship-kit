@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.3
+
+- `mobile-ui.md`: note that Reanimated 4 needs `react-native-worklets` as an explicit dep plus a `babel.config.js` (`babel-preset-expo`) — missing either fails silently in Metro rather than at install
+
 ## 0.3.2
 
 - Fix `setup.sh` self-delete when run from `.cursor/skills/app-ship-kit` (stage to temp before install)

@@ -54,6 +54,7 @@ If Expo Router is installed, prefer reading **`expo-router`** / **`expo-native-u
 - Prefer springs for press / sheet; avoid layout-property animation
 - Honor Reduce Motion: skip enter loops, pulse rings, confetti
 - One "hero" motion per screen max
+- **Reanimated 4 needs `react-native-worklets` as an explicit dependency** (worklets moved out of the Reanimated package) **and a `babel.config.js`** with `babel-preset-expo` — missing either one fails silently in the Metro bundle rather than erroring at install. If a fresh Expo project has no `babel.config.js`, add one before debugging anything else.
 
 Web motion skills (`fixing-motion-performance`) → translate to Reanimated/`transform`+`opacity`.
 
