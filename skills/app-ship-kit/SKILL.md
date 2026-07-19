@@ -11,7 +11,7 @@ description: >-
 license: MIT
 metadata:
   openstandard: agentskills.io
-  version: "0.3.3"
+  version: "0.4.0"
   stacks: expo, react-native, supabase, typescript
 ---
 
@@ -78,6 +78,7 @@ Trace flow → philosophy ladder → smallest correct diff
 
 ```
 DESIGN.md → critique (ui.md) → mobile-ui.md checklist
+→ optional Apple HIG lookup (sibling skill apple-design)
 → polish (44pt, motion, loading) → de-slopify → verify
 → optional: expo-native-ui / Callstack / axiom (ecosystem.md)
 ```

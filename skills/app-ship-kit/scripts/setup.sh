@@ -108,6 +108,36 @@ install_local_copy() {
   fi
 }
 
+# Sibling skill shipped in the same GitHub repo (optional; skip if absent).
+install_apple_design_sibling() {
+  local sibling_src
+  sibling_src="$(cd "$SKILL_SRC/.." && pwd)/apple-design"
+  [[ -f "$sibling_src/SKILL.md" ]] || return 0
+
+  local stage_ad
+  stage_ad="$(mktemp -d "${TMPDIR:-/tmp}/apple-design.XXXXXX")"
+  cp -R "$sibling_src" "$stage_ad/apple-design"
+
+  install_ad() {
+    local dest="$1"
+    mkdir -p "$(dirname "$dest")"
+    rm -rf "$dest"
+    cp -R "$stage_ad/apple-design" "$dest"
+    echo "Installed → $dest"
+  }
+
+  if (( GLOBAL )); then
+    install_ad "${HOME}/.cursor/skills/apple-design"
+    install_ad "${HOME}/.claude/skills/apple-design"
+    install_ad "${HOME}/.agents/skills/apple-design"
+  else
+    install_ad "${PROJECT}/.cursor/skills/apple-design"
+    install_ad "${PROJECT}/.claude/skills/apple-design"
+    install_ad "${PROJECT}/.agents/skills/apple-design"
+  fi
+  rm -rf "$stage_ad"
+}
+
 scaffold_project() {
   mkdir -p "${PROJECT}/.claude" "${PROJECT}/docs"
 
@@ -161,6 +191,8 @@ scaffold_project() {
 echo "==> Installing app-ship-kit into: ${PROJECT}"
 echo "    (staged from ${SKILL_SRC})"
 install_local_copy
+echo "==> Installing sibling apple-design (if present in repo)"
+install_apple_design_sibling
 
 if (( INIT )); then
   echo "==> Scaffolding project files (--init)"

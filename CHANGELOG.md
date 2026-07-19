@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+- New sibling skill **`apple-design`**: index of [Apple Design](https://developer.apple.com/design/) (Overview, What’s New, Get Started, HIG, Resources) with intent→HIG URL lookup
+- `setup.sh` installs `apple-design` alongside the kit when present in this repo
+- Wired into pipeline B, `ui.md`, and `ecosystem.md` (HIG / Liquid Glass / SF Symbols / kits)
+
 ## 0.3.3
 
 - `mobile-ui.md`: note that Reanimated 4 needs `react-native-worklets` as an explicit dep plus a `babel.config.js` (`babel-preset-expo`) — missing either fails silently in Metro rather than at install

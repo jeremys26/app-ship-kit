@@ -80,6 +80,7 @@ Templates: design brief, ship checklist, AGENTS snippet.
 Depth on demand: `skills/app-ship-kit/references/` (progressive disclosure).
 
 RN/iOS defaults without extra installs: [`mobile-ui.md`](skills/app-ship-kit/references/mobile-ui.md).  
+Apple Design / HIG lookup: sibling skill [`apple-design`](skills/apple-design/) (installed with `setup.sh` from this repo, or `npx skills add jeremys26/app-ship-kit --skill apple-design -y`).  
 Upstream catalog: [`ecosystem.md`](skills/app-ship-kit/references/ecosystem.md).
 
 ---
@@ -87,13 +88,17 @@ Upstream catalog: [`ecosystem.md`](skills/app-ship-kit/references/ecosystem.md).
 ## Layout
 
 ```text
-skills/app-ship-kit/
-├── SKILL.md
-├── references/
-├── assets/
-└── scripts/
-    ├── setup.sh      # --init scaffolds project files; --stack adds upstream
-    └── validate.sh
+skills/
+├── app-ship-kit/
+│   ├── SKILL.md
+│   ├── references/
+│   ├── assets/
+│   └── scripts/
+│       ├── setup.sh      # --init scaffolds project files; --stack adds upstream
+│       └── validate.sh   # also validates sibling apple-design when present
+└── apple-design/
+    ├── SKILL.md
+    └── references/       # Design hub index + HIG lookup
 ```
 
 ## License

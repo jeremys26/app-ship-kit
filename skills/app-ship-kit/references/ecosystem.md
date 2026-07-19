@@ -60,6 +60,7 @@ Manual equivalents are in each section below.
 | Skill / tool | Install | Use when | Notes |
 |--------------|---------|----------|-------|
 | Kit [ui.md](ui.md) + [mobile-ui.md](mobile-ui.md) | (built-in) | Critique → polish → copy | Always first |
+| **apple-design** (this repo) | `npx skills add jeremys26/app-ship-kit --skill apple-design -y` | HIG page lookup, Liquid Glass / materials / icons, SF Symbols, design kits, What’s New | Index of [developer.apple.com/design](https://developer.apple.com/design/); fetch live pages — don’t vendor Apple prose |
 | **ui-skills** CLI | `npx ui-skills start` | "Which UI skill?" / motion / a11y routing | Translate web (ARIA/Tailwind) → RN props; **skip** `baseline-ui` unless NativeWind |
 | **expo-native-ui** | via expo/skills | Native-feeling screens, HIG | Best Expo UI depth |
 | **axiom-ios-accessibility** | `npx skills add charleswiltgen/axiom --skill axiom-ios-accessibility -y` | VoiceOver, Dynamic Type, App Store a11y review | Complements kit Pass 6 |
@@ -108,10 +109,11 @@ Argent is optional power-tooling; do not require it for peers.
 
 | User intent | Load first | Then (if installed) |
 |-------------|------------|---------------------|
-| New screen / polish | DESIGN.md → ui.md → mobile-ui.md | expo-native-ui |
+| New screen / polish | DESIGN.md → ui.md → mobile-ui.md | apple-design lookup → expo-native-ui |
+| HIG / Liquid Glass / SF Symbols / design kits | **apple-design** | mobile-ui.md |
 | Scroll jank / slow TTI | verify → **Callstack** (measure) | vercel list rules |
-| Navigation / tabs / sheets | mobile-ui.md | expo-router |
-| VoiceOver / Dynamic Type | ui.md Pass 6 | axiom-ios-accessibility |
+| Navigation / tabs / sheets | mobile-ui.md | apple-design (`tab-bars`/`sheets`) → expo-router |
+| VoiceOver / Dynamic Type | ui.md Pass 6 | apple-design `accessibility` → axiom-ios-accessibility |
 | TestFlight / App Store | ship.md | eas-app-stores → app-store-preflight |
 | Data / offline / React Query | backend patterns | expo-data-fetching |
 | "Which UI skill?" | `npx ui-skills start` | map result → RN |
@@ -125,6 +127,7 @@ Argent is optional power-tooling; do not require it for peers.
 app-ship-kit          → which pipeline (A–E)
 DESIGN + philosophy   → constraints + minimal diffs
 mobile-ui.md          → RN/iOS defaults without installs
+apple-design          → HIG URL lookup + design resources index
 ecosystem pack        → official Expo / Callstack / a11y / store depth
 verify + ship         → smoke + human QA
 ```

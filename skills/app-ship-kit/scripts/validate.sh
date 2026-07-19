@@ -59,6 +59,34 @@ done < <(grep -oE '\[[^]]+\]\((references|assets|scripts)/[^)]+\)' "$SKILL_DIR/S
   | sed -E 's/.*\(([^)]+)\).*/\1/' || true)
 ok "SKILL.md relative links resolve"
 
+# Sibling skill (same GitHub repo)
+AD_DIR="$(cd "$SKILL_DIR/.." && pwd)/apple-design"
+if [[ -d "$AD_DIR" ]]; then
+  echo "==> Validating sibling apple-design"
+  [[ -f "$AD_DIR/SKILL.md" ]] || fail "apple-design missing SKILL.md"
+  if head -n 20 "$AD_DIR/SKILL.md" | grep -q '^name:[[:space:]]*apple-design[[:space:]]*$'; then
+    ok "apple-design name matches folder"
+  else
+    fail "apple-design frontmatter name must be apple-design"
+  fi
+  AD_LINES=$(wc -l < "$AD_DIR/SKILL.md" | tr -d ' ')
+  if [[ "$AD_LINES" -gt 500 ]]; then
+    fail "apple-design SKILL.md is ${AD_LINES} lines (keep under 500)"
+  else
+    ok "apple-design SKILL.md length ${AD_LINES} (<500)"
+  fi
+  for f in index.md lookup.md hig-topics.md pathway.md resources.md; do
+    [[ -f "$AD_DIR/references/$f" ]] || fail "apple-design missing references/$f"
+  done
+  ok "apple-design required references present"
+  while IFS= read -r link; do
+    target="$AD_DIR/$link"
+    [[ -e "$target" ]] || fail "apple-design SKILL.md broken link: $link"
+  done < <(grep -oE '\[[^]]+\]\((references|assets|scripts)/[^)]+\)' "$AD_DIR/SKILL.md" \
+    | sed -E 's/.*\(([^)]+)\).*/\1/' || true)
+  ok "apple-design relative links resolve"
+fi
+
 if [[ "$ERR" -ne 0 ]]; then
   echo "Validation failed." >&2
   exit 1

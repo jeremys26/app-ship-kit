@@ -10,7 +10,7 @@ DESIGN.md (constraints)
 
 Read the project's design brief first. If missing, fill [design-brief-template.md](../assets/design-brief-template.md). Do not invent a second palette or install Tailwind/shadcn unless the project already uses them.
 
-For React Native / iOS specifics (lists, Pressable, Reduce Motion, VoiceOver), also read [mobile-ui.md](mobile-ui.md). Depth via [ecosystem.md](ecosystem.md) (`expo-native-ui`, Callstack, axiom-ios-accessibility).
+For React Native / iOS specifics (lists, Pressable, Reduce Motion, VoiceOver), also read [mobile-ui.md](mobile-ui.md). For official Apple HIG page lookup (tabs, sheets, materials, icons, SF Symbols), load sibling skill **apple-design** when installed. Depth via [ecosystem.md](ecosystem.md) (`apple-design`, `expo-native-ui`, Callstack, axiom-ios-accessibility).
 
 ---
 
